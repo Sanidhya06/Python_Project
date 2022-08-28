@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from bubblesort import BubbleSort
 from quicksort import QuickSort
 from mergesort import MergeSort
@@ -7,7 +8,7 @@ from linearsearch import LinearSearch
 from binarysearch import BinarySearch
 
 root = Tk()
-root.title('Sorting Algorithm Visualisation')
+root.title('PYTHON PROJECT')
 root.maxsize(900, 600)
 root.config(bg='black')
 
@@ -18,7 +19,7 @@ speed = 0.7
 
 
 # function
-def draw_data(data, color_array):
+def draw_data(data, color_array, popup):
     canvas.delete("all")
     c_height = 380
     c_width = 600
@@ -36,7 +37,11 @@ def draw_data(data, color_array):
 
         canvas.create_rectangle(x0, y0, x1, y1, fill=color_array[i])
         canvas.create_text(x0 + 2, y0, anchor=SW, text=str(data[i]))
-
+    
+    if popup == 1:
+        messagebox.showinfo("MESSAGE", "Number Not Found In Data")
+    elif popup == 2:
+        messagebox.showinfo("MESSAGE", "Number Found In Data")
     root.update_idletasks()
 
 
@@ -46,7 +51,7 @@ def generate():
     data = [int(n.strip()) for n in data.split(' ')]
     size = len(data)
 
-    draw_data(data, ['red' for _ in range(size)])  # ['red', 'red' ,....]
+    draw_data(data, ['red' for _ in range(size)],0)  # ['red', 'red' ,....]
 
 
 def start_algorithm():
@@ -56,17 +61,17 @@ def start_algorithm():
     if algMenu.get() == 'Quick Sort':
         qs = QuickSort(data)
         qs.quick_sort(data, 0, len(data) - 1, draw_data, speed)
-        draw_data(data, ['green' for _ in range(len(data))])
+        draw_data(data, ['green' for _ in range(len(data))],0)
 
     elif algMenu.get() == 'Bubble Sort':
         bs = BubbleSort(data)
         bs.bubble_sort(draw_data, speed)
-        draw_data(data, ['green' for _ in range(len(data))])
+        draw_data(data, ['green' for _ in range(len(data))],0)
 
     elif algMenu.get() == 'Merge Sort':
         ms = MergeSort(data)
         ms.merge_sort(draw_data, speed)
-        draw_data(data, ['green' for _ in range(len(data))])
+        draw_data(data, ['green' for _ in range(len(data))],0)
 
     elif algMenu.get() == 'Linear Search':
         search = searchEntry.get()

@@ -3,6 +3,8 @@ from tkinter import ttk
 from bubblesort import BubbleSort
 from quicksort import QuickSort
 from mergesort import MergeSort
+from linearsearch import LinearSearch
+from binarysearch import BinarySearch
 
 root = Tk()
 root.title('Sorting Algorithm Visualisation')
@@ -12,7 +14,7 @@ root.config(bg='black')
 # variables
 selected_alg = StringVar()
 data = []
-speed = 0.2
+speed = 0.7
 
 
 # function
@@ -54,16 +56,27 @@ def start_algorithm():
     if algMenu.get() == 'Quick Sort':
         qs = QuickSort(data)
         qs.quick_sort(data, 0, len(data) - 1, draw_data, speed)
+        draw_data(data, ['green' for _ in range(len(data))])
 
     elif algMenu.get() == 'Bubble Sort':
         bs = BubbleSort(data)
         bs.bubble_sort(draw_data, speed)
+        draw_data(data, ['green' for _ in range(len(data))])
 
     elif algMenu.get() == 'Merge Sort':
         ms = MergeSort(data)
         ms.merge_sort(draw_data, speed)
+        draw_data(data, ['green' for _ in range(len(data))])
 
-    draw_data(data, ['green' for _ in range(len(data))])
+    elif algMenu.get() == 'Linear Search':
+        search = searchEntry.get()
+        ls = LinearSearch(data, search)
+        ls.linear_search(draw_data, speed)
+
+    elif algMenu.get() == 'Binary Search':
+        search = searchEntry.get()
+        bs = BinarySearch(data, search)
+        bs.binary_search(draw_data, speed)
 
 
 # frame / base layout
@@ -76,7 +89,7 @@ canvas.grid(row=1, column=0, padx=10, pady=5)
 # User Interface Area
 # Row[0]
 Label(ui_frame, text="Algorithm: ", bg='grey').grid(row=0, column=0, padx=5, pady=5, sticky=W)
-algMenu = ttk.Combobox(ui_frame, textvariable=selected_alg, values=['Bubble Sort', 'Quick Sort', 'Merge Sort'])
+algMenu = ttk.Combobox(ui_frame, textvariable=selected_alg, values=['Bubble Sort', 'Quick Sort', 'Merge Sort', 'Linear Search', 'Binary Search'])
 algMenu.grid(row=0, column=1, padx=5, pady=5)
 algMenu.current(0)
 
@@ -85,6 +98,10 @@ Button(ui_frame, text="Start", command=start_algorithm, bg='red').grid(row=0, co
 Label(ui_frame, text="List of Numbers ", bg='grey').grid(row=1, column=0, padx=5, pady=5, sticky=W)
 arrayEntry = Entry(ui_frame)
 arrayEntry.grid(row=1, column=1, padx=5, pady=5, sticky=W)
+
+Label(ui_frame, text="Search for ", bg='grey').grid(row=2, column=0, padx=5, pady=5, sticky=W)
+searchEntry = Entry(ui_frame)
+searchEntry.grid(row=2, column=1, padx=5, pady=5, sticky=W)
 
 Button(ui_frame, text="Generate", command=generate, bg='white').grid(row=1, column=3, padx=5, pady=5)
 
